@@ -1,0 +1,11 @@
+
+  {% for element in form %}
+    {{ element.label }}
+    {{ element }}
+    <ul>
+      {% for error in element.errors %}
+        <li class="error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %} 
+

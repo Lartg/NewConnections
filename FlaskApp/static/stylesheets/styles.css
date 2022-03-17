@@ -1,0 +1,29 @@
+body {
+  background-color: #F6F1EB;
+}
+
+.comment {
+  width: 62px;
+  height: 40px;
+  left: 992px;
+  top: 186px;
+}
+
+.like {
+  width: 45px;
+  height: 45px;
+  left: 1080px;
+  top: 184px;
+}
+
+.new-post {
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.icons {
+  height: 500px;
+  width: 500px;
+  padding: 40px;
+  font-size: 5000px;
+}

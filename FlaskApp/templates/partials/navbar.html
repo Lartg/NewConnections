@@ -1,0 +1,26 @@
+<ul class="nav justify-content-center" style="height: 5vh;" >
+  <li class="nav-item" style="position: absolute; left:0px">
+    <img src="{{url_for('static', filename='IMAGES/Logo.svg')}}">
+  </li>
+  {% if user != None %}
+  <li class="nav-item">
+    <a class="nav-link link-dark" href="/account-profile/{{current_user.id}}">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link link-dark" href="/feed/{{current_user.id}}">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link link-dark" href="/create-post/{{current_user.id}}">Create Post</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link link-dark" href="/logout">Logout</a>
+  </li>
+  {% else %}
+  <li class="nav-item">
+    <a class="nav-link active link-dark" aria-current="page" href="/google/login">Login</a>
+  </li>
+  <li>
+  <a href="/google/login"><button class="btn btn-dark ml-5">Sign Up</button></a>
+</li>
+  {% endif %}
+</ul>
