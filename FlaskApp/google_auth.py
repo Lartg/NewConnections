@@ -21,7 +21,7 @@ CLIENT_SECRET = os.environ.get("FN_CLIENT_SECRET", default=False)
 AUTH_TOKEN_KEY = 'auth_token'
 AUTH_STATE_KEY = 'auth_state'
 
-app = flask.Blueprint('google_auth', __name__)
+auth = flask.Blueprint('google_auth', __name__)
 
 def is_logged_in():
     return True if AUTH_TOKEN_KEY in flask.session else False
@@ -59,7 +59,7 @@ def no_cache(view):
 
     return functools.update_wrapper(no_cache_impl, view)
 
-@app.route('/google/login')
+@auth.route('/google/login')
 @no_cache
 def login():
     session = OAuth2Session(CLIENT_ID, CLIENT_SECRET,
@@ -73,7 +73,7 @@ def login():
 
     return flask.redirect(uri, code=302)
 
-@app.route('/google/auth')
+@auth.route('/google/auth')
 @no_cache
 def google_auth_redirect():
     req_state = flask.request.args.get('state', default=None, type=None)
@@ -95,7 +95,7 @@ def google_auth_redirect():
 
     return flask.redirect(BASE_URI, code=302)
 
-@app.route('/google/logout')
+@auth.route('/google/logout')
 @no_cache
 def logout():
     flask.session.pop(AUTH_TOKEN_KEY, None)

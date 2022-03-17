@@ -36,7 +36,7 @@
     {% for comment in comments %}
           {% if comment.post_id == post.id %}
             <p>{{comment.content}}</p>
-            {% if current_user.id == comment.owner %}
+            {% if user.id == comment.owner %}
             <a href="/delete-comment/{{comment.id}}"><button>Delete Comment</button></a>
             {% endif %}
           {% endif %}
@@ -46,7 +46,7 @@
       <div style="display: none;">{{form.post(value=post.id)}}</div>
       <div style="display: none;">{{form.submit}}</div>
       </form>
-    {% if current_user.id == post.owner %}
+    {% if user.id == post.owner %}
     <a href="/delete-post/{{post.id}}"><button>Delete Post</button></a>
     {% endif %}
   </div>

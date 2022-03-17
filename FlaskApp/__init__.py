@@ -6,9 +6,9 @@ import psycopg2
 import dotenv
 
 
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-
 
 
 migrate = Migrate(compare_type=True)
@@ -19,7 +19,6 @@ uri = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
-
 
 
 conn = psycopg2.connect(
@@ -35,12 +34,7 @@ conn = psycopg2.connect(
 db.app = app
 
 migrate.init_app(db, app)
-
 from FlaskApp.routes import main
 import FlaskApp.google_auth as google_auth
-app.secret_key = os.environ.get("FN_FLASK_SECRET_KEY", default=False)
-
-app.register_blueprint(google_auth.app)
+app.register_blueprint(google_auth.auth)
 app.register_blueprint(main)
-
-
