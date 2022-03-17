@@ -39,7 +39,6 @@ def landing_page():
 def display_feed(user_id):
   if google_auth.is_logged_in():
     user = User.query.get(user_id)
-    # add query to see if user exists, if not bring to profile form
     posts = Post.query.all()
     comments = Comment.query.all()
     form = CommentForm()
@@ -52,33 +51,33 @@ def display_feed(user_id):
       )
       db.session.add(new_comment)
       db.session.commit()
-      #return render_template('feed.html', posts=posts, user=user, form=form, comments=Comment.query.all())
+      return render_template('feed.html', posts=posts, user=user, form=form, comments=Comment.query.all())
     return render_template('feed.html', posts=posts, user=user, form=form, comments = comments)
   return flash('You are not currently logged in.')
 
-# @main.route('/create-post/<user_id>', methods = ['GET', 'POST'])
-# def create_post(user_id):
-#   if google_auth.is_logged_in():
-#     user_info = google_auth.get_user_info()
-#     form = PostForm()
-#     if form.is_submitted():
-#       author = User.query.get(user_id).username
-#       image = request.form['photo-url']
-#       print(image)
-#       new_post = Post(
-#         time_created = form.time.data,
-#         title = form.title.data,
-#         description = form.description.data,
-#         owner = user_id,
-#         author = author,
-#         image = image
-#       )
-#       db.session.add(new_post)
-#       db.session.commit()
-#       return redirect(f'/feed/{user_id}')
+@main.route('/create-post/<user_id>', methods = ['GET', 'POST'])
+def create_post(user_id):
+  if google_auth.is_logged_in():
+    user = User.query.get(user_id)
+    form = PostForm()
+    if form.is_submitted():
+      author = user.username
+      # image = request.form['photo-url']
+      # print(image)
+      new_post = Post(
+        time_created = form.time.data,
+        title = form.title.data,
+        description = form.description.data,
+        owner = user_id,
+        author = author
+        #image = image
+      )
+      db.session.add(new_post)
+      db.session.commit()
+      return redirect(f'/feed/{user_id}')
     
-#     return render_template('create_post.html', form=form, user=current_user)
-#   return flash('You are not currently logged in.')
+    return render_template('create_post.html', form=form, user=user)
+  return flash('You are not currently logged in.')
 
 @main.route('/account-profile/<user_id>')
 def account_profile(user_id):
@@ -109,36 +108,36 @@ def edit_profile(user_id):
 
 # #------DELETE----------------------------------------------------------------------
 
-# @main.route('/delete-user/<user_id>')
+@main.route('/delete-user/<user_id>')
 
-# def delete_user(user_id):
-#   if google_auth.is_logged_in():
-#     user_info = google_auth.get_user_info()
-#     user = User.query.get(user_id)
-#     # logout_user()
-#     db.session.delete(user)
-#     db.session.commit()
-#     return redirect('/')
-#   return flash('You are not currently logged in.')
-# @main.route('/delete-post/<post_id>')
+def delete_user(user_id):
+  if google_auth.is_logged_in():
+    user = User.query.get(user_id)
+    #delete all posts
+    db.session.delete(user)
+    db.session.commit()
+    return redirect('/google/logout')
+  return flash('You are not currently logged in.')
 
-# def delete_post(post_id):
-#   if google_auth.is_logged_in():
-#     user_info = google_auth.get_user_info()
-#     post = Post.query.get(post_id)
-#     db.session.delete(post)
-#     db.session.commit()
-#     return redirect(f'/feed/{current_user.id}')
-#   return flash('You are not currently logged in.')
+@main.route('/delete-post/<post_id>')
+def delete_post(post_id):
+  if google_auth.is_logged_in():
+    user_info = google_auth.get_user_info()
+    user = User.query.filter_by(email=user_info['email']).first()
+    post = Post.query.get(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(f'/feed/{user.id}')
+  return flash('You are not currently logged in.')
 
-# @main.route('/delete-comment/<comment_id>')
-
-# def delete_comment(comment_id):
-#   if google_auth.is_logged_in():
-#     user_info = google_auth.get_user_info()
-#     comment = Comment.query.get(comment_id)
-#     db.session.delete(comment)
-#     db.session.commit()
-#     return redirect(f'/feed/{current_user.id}')
-#   return flash('You are not currently logged in.')
+@main.route('/delete-comment/<comment_id>')
+def delete_comment(comment_id):
+  if google_auth.is_logged_in():
+    user_info = google_auth.get_user_info()
+    user = User.query.filter_by(email=user_info['email']).first()
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(f'/feed/{user.id}')
+  return flash('You are not currently logged in.')
 
