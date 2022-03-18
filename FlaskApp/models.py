@@ -21,7 +21,6 @@ class User(db.Model):
 class Post(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   time_created = db.Column(db.DateTime)
-  # #category
   title = db.Column(db.String, nullable=False)
   description = db.Column(db.String, nullable=False)
   owner = db.Column(db.Integer, db.ForeignKey('user.id'))

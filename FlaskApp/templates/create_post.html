@@ -48,7 +48,7 @@
           // listen to the "upload completed" event
           widget.onUploadComplete(fileInfo => {
             // get a CDN URL from the file info
-            imageURL = `https://ucarecdn.com/:${fileInfo.uuid}/`;
+            imageURL = `https://ucarecdn.com/${fileInfo.uuid}/`;
           });
         </script>
       </div>

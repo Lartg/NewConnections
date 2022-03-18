@@ -16,29 +16,9 @@ class PostForm(FlaskForm):
     validators=[
       DataRequired()
     ])
+  image = StringField('Image')
   submit = SubmitField('Submit')
 
-
-class LoginForm(FlaskForm):
-  username = StringField('Username',
-    validators=[
-      DataRequired(),
-      Length(min=4, max=20, message=None)])
-  password = StringField('Password',
-    validators=[
-    DataRequired(),
-    Length(min=4, max=20, message=None)])
-  submit = SubmitField('Submit')
-  
-class SignUpForm(FlaskForm):
-  username = StringField('Username')
-  password = StringField('Password')
-  submit = SubmitField('Submit')
-  
-  # def validate_username(self, username):
-  #   user = User.query.filter_by(username=username.data).first()
-  #   if user:
-  #     raise ValidationError('That username is taken. Please choose a different one.')
 
 class EditAccountForm(FlaskForm):
   username = StringField('Username',
@@ -49,10 +29,10 @@ class EditAccountForm(FlaskForm):
     validators=[
       DataRequired()
     ])
+  image = StringField('Image')
   profile_bio = StringField('Bio')
   submit = SubmitField('Submit')
-  #image = ImageField()
-  # in imagefield class manual_crop='100x100'
+
 
 class CommentForm(FlaskForm):
   content = StringField('Comment')

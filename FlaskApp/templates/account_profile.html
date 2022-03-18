@@ -11,13 +11,22 @@
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px">
 
               <!-- USER PHOTO -->
+              
+              {% if profile.profile_picture is not none%}
+              <img
+                src="{{profile.profile_picture}}"
+                alt="Generic placeholder image"
+                class="img-fluid img-thumbnail mt-4 mb-2"
+                style="width: 150px; z-index: 1"
+              />
+              {% else %}
               <img
                 src="{{url_for('static', filename='IMAGES/PFPexample.jpg')}}"
                 alt="Generic placeholder image"
                 class="img-fluid img-thumbnail mt-4 mb-2"
                 style="width: 150px; z-index: 1"
               />
-
+              {% endif %}
             </div>
 
             <!-- NAME  -->

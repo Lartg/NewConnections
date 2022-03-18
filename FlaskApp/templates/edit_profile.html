@@ -5,92 +5,120 @@
 <link rel="stylesheets" href="{{ url_for('static', filename='stylesheets/profileedit.css') }}">
 <div class="container">
   <div class="row gutters">
-  <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-  <div class="card h-100">
-    <div class="card-body">
-      <div class="account-settings">
-        <div class=" d-flex flex-column" >
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="account-settings">
+            <div class=" d-flex flex-column">
 
-          <!-- USER PHOTO -->
-          <img
-            src="{{url_for('static', filename='IMAGES/PFPexample.jpg')}}"
-            alt="Generic placeholder image"
-            class="img-fluid img-thumbnail"
-          />
+              <!-- USER PHOTO -->
+              {% if user.profile_picture is not none%}
+              <img src="{{user.profile_picture}}" alt="Generic placeholder image" class="img-fluid img-thumbnail" />
+              {% else %}
+              <img src="{{url_for('static', filename='IMAGES/PFPexample.jpg')}}" alt="Generic placeholder image"
+                class="img-fluid img-thumbnail" />
+              {% endif %}
 
-        </div>
+            </div>
 
-        <!-- NAME  -->
-        <div class="ms-3">
-          <h5>{{user.name}}</h5>
-          <p>{{user.username}}</p>
-        </div>
-        <div class="mb-5">
-          <p class="lead fw-normal mb-1">About</p>
+            <!-- NAME  -->
+            <div class="ms-3">
+              <h5>{{user.name}}</h5>
+              <p>{{user.username}}</p>
+            </div>
+            <div class="mb-5">
+              <p class="lead fw-normal mb-1">About</p>
 
-          <!-- ABOUT SECTION  -->
-          <div class="p-4" style="background-color: #f8f9fa">
-            <p class="font-italic mb-1">{{user.profile_bio}}</p>
-          </div>
+              <!-- ABOUT SECTION  -->
+              <div class="p-4" style="background-color: #f8f9fa">
+                <p class="font-italic mb-1">{{user.profile_bio}}</p>
+              </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-  <div class="card h-100">
-    <div class="card-body">
-      <div class="row gutters">
-        <style>
-          input{
-            background: none;
-            border: none;
-            width: 50%;
-            border-bottom: 1px solid black;
-            border-radius: 0px;
-          }
-        </style>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <h6 class="mb-2 text-primary">Personal Details</h6>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="fullName">Username</label>
-            <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="eMail">Name</label>
-            <input type="email" class="form-control" id="eMail" placeholder="Enter email ID">
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="phone">About</label>
-            <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="website">Photo</label>
-            <input type="url" class="form-control" id="website" placeholder="Website url">
-          </div>
-        </div>
-      </div>
-      <div class="row gutters">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div class="text-right">
-            <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-            <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
-            <a href="/delete-user/{{user.id}}"><button class="btn btn-primary">Delete Account</button></a>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row gutters">
+            <style>
+              input {
+                background: none;
+                border: none;
+                width: 100%;
+                border-bottom: 1px solid black;
+                border-radius: 1px;
+              }
+            </style>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <h6 class="mb-2 text-primary">Personal Details</h6>
+            </div>
+            <form action="/account-profile/{{user.id}}/edit" method="POST">
+              {{ form.csrf_token }}
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label>Username:</label>
+                  {{form.username}}
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  {{form.name}}
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="profile_bio">About:</label>
+                  {{form.profile_bio}}
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <input type="hidden" role="uploadcare-uploader" name="my_file_input" />
+                  <style>
+                    #image {
+                      display: none;
+                    }
+                  </style>
+                  {{form.image}}
+                  <script>
+                    let imageURL = ""
+                    // get a widget reference
+                    const widget = uploadcare.SingleWidget("[role=uploadcare-uploader]");
+                    // listen to the "upload completed" event
+                    widget.onUploadComplete(fileInfo => {
+                      // get a CDN URL from the file info
+                      imageURL = `https://ucarecdn.com/${fileInfo.uuid}/`;
+                      document.getElementById("image").value = imageURL
+                    });
+                  </script>
+                </div>
+              </div>
+          </div>
+          <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="text-right">
+                <style>
+                  #submit {
+                    width: 100%;
+                    height: 100%;
+                    color: black;
+                    width: 220px;
+                    border: solid;
+                  }
+                </style>
+                {{form.submit}}
+                <a href="/delete-user/{{user.id}}"><button class="btn btn-primary">Delete Account</button></a>
+              </div>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  </div>
-  </div>
-  </div>
+</div>
 {% endblock %}

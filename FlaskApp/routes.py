@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, session, make_response
-from FlaskApp.forms import CommentForm, LoginForm, PostForm, SignUpForm, EditAccountForm
+from FlaskApp.forms import CommentForm,  PostForm, EditAccountForm
 from FlaskApp.models import Post, User, Comment, Like
 from FlaskApp import db, app
 from authlib.client import OAuth2Session
@@ -94,13 +94,17 @@ def edit_profile(user_id):
   if google_auth.is_logged_in():
     user = User.query.get(user_id)
     form = EditAccountForm(obj=user)
-    if form.validate_on_submit():
+    if form.is_submitted():
+      print('-------------------------1------------')
       user.username = form.username.data
       user.name = form.name.data
+      user.profile_picture = form.image.data
+      print(form.image.data)
+      print('-------------------------1------------')
       user.profile_bio = form.profile_bio.data
       db.session.add(user)
       db.session.commit()
-      return redirect(f'/account-profile.html/{user_id}')
+      return redirect(f'/account-profile/{user_id}')
     return render_template('edit_profile.html', user=user, form=form)
   return flash('You are not currently logged in.')
 
