@@ -9,7 +9,12 @@ dotenv.load_dotenv('.env')
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-
+from flask import session
+from flask_session import Session 
+app.secret_key = 'A0AKR5TGD\ R~XHH!jmN]LWX/,?RT'
+app.config["SESSION_PERMANENT"] = True
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 migrate = Migrate(compare_type=True)
 

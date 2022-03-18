@@ -1,15 +1,18 @@
 alembic==1.7.7
 Authlib==0.11
+cachelib==0.6.0
 cachetools==5.0.0
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.12
 click==8.0.4
 cryptography==36.0.2
+Deprecated==1.2.13
 distlib==0.3.4
 filelock==3.6.0
 Flask==2.0.3
 Flask-Migrate==3.1.0
+Flask-Session==0.4.0
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==1.0.0
 google-api-core==2.7.1
@@ -26,6 +29,7 @@ itsdangerous==2.1.1
 Jinja2==3.0.3
 Mako==1.2.0
 MarkupSafe==2.1.1
+packaging==21.3
 platformdirs==2.5.1
 protobuf==3.19.4
 psycopg2==2.9.3
@@ -34,6 +38,7 @@ pyasn1-modules==0.2.8
 pycparser==2.21
 pyparsing==3.0.7
 python-dotenv==0.19.2
+redis==4.1.4
 requests==2.27.1
 rsa==4.8
 six==1.16.0
@@ -42,6 +47,7 @@ uritemplate==4.1.1
 urllib3==1.26.9
 virtualenv==20.13.3
 Werkzeug==2.0.3
+wrapt==1.14.0
 WTForms==3.0.1
 WTForms-SQLAlchemy==0.3
 zipp==3.7.0
