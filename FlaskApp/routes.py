@@ -10,8 +10,8 @@ import json
 import FlaskApp.google_auth as google_auth
 main = Blueprint('main', __name__)
 
-with app.app_context():
-   db.create_all()
+# with app.app_context():
+#    db.create_all()
 
 
 #------------------content------------------------------------------------------------
