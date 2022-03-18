@@ -4,7 +4,7 @@ import os
 from flask_migrate import Migrate
 import psycopg2
 import dotenv
-
+dotenv.load_dotenv('.env')
 
 
 app = Flask(__name__)
