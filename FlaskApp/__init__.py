@@ -15,17 +15,17 @@ migrate = Migrate(compare_type=True)
 
 db = SQLAlchemy()
 
-uri = os.environ.get('DATABASE_URI')
+uri = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 
 conn = psycopg2.connect(
-  dbname='d4n6hcaulpeumg',
-  user='xlgcwbjezjifrp',
-  password='8bded6d11509b4cde65f4213be50750c694e589f6fdead71852831417761f26c',
-  host='ec2-54-156-110-139.compute-1.amazonaws.com',
+  dbname=os.environ.get('DB_NAME'),
+  user=os.environ.get('DB_USER'),
+  password=os.environ.get('DB_PASSWORD'),
+  host=os.environ.get('DB_HOST'),
   port=5432
   )
 
