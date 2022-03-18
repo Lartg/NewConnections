@@ -37,7 +37,12 @@
           {{form.time}}
         </div> 
       </div>
-
+      <style>
+        #image {
+          display: none;
+        }
+      </style>
+      {{form.image}}
       <div class="p-3">
         <input type="hidden" role="uploadcare-uploader" name="my_file_input" />
   
@@ -49,7 +54,8 @@
           widget.onUploadComplete(fileInfo => {
             // get a CDN URL from the file info
             imageURL = `https://ucarecdn.com/${fileInfo.uuid}/`;
-          });
+            document.getElementById("image").value = imageURL
+            });
         </script>
       </div>
 

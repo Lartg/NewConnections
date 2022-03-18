@@ -10,8 +10,8 @@ import json
 import FlaskApp.google_auth as google_auth
 main = Blueprint('main', __name__)
 
-# with app.app_context():
-#    db.create_all()
+with app.app_context():
+   db.create_all()
 
 
 #------------------content------------------------------------------------------------
@@ -69,8 +69,9 @@ def create_post(user_id):
         title = form.title.data,
         description = form.description.data,
         owner = user_id,
-        author = author
-        #image = image
+        author = author,
+        author_image = user.profile_picture,
+        image = form.image.data
       )
       db.session.add(new_post)
       db.session.commit()

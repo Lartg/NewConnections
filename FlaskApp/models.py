@@ -26,6 +26,7 @@ class Post(db.Model):
   owner = db.Column(db.Integer, db.ForeignKey('user.id'))
   author = db.Column(db.String, nullable=False)
   likes = db.Column(db.Integer, db.ForeignKey('like.id'))
+  author_image = db.Column(db.String, nullable=True)
   image = db.Column(db.String, nullable=True)
   def __str__(self):
     return
