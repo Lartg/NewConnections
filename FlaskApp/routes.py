@@ -37,7 +37,7 @@ def landing_page():
 
 @main.route('/feed/<user_id>', methods = ['GET', 'POST'])
 def display_feed(user_id):
-  if google_auth.is_logged_in():
+  if google_auth.is_logged_in() == True:
     user = User.query.get(user_id)
     posts = Post.query.all()
     comments = Comment.query.all()
@@ -53,7 +53,8 @@ def display_feed(user_id):
       db.session.commit()
       return render_template('feed.html', posts=posts, user=user, form=form, comments=Comment.query.all())
     return render_template('feed.html', posts=posts, user=user, form=form, comments = comments)
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
 @main.route('/create-post/<user_id>', methods = ['GET', 'POST'])
 def create_post(user_id):
@@ -78,7 +79,8 @@ def create_post(user_id):
       return redirect(f'/feed/{user_id}')
     
     return render_template('create_post.html', form=form, user=user)
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
 @main.route('/account-profile/<user_id>')
 def account_profile(user_id):
@@ -88,7 +90,8 @@ def account_profile(user_id):
     user_profile = User.query.get(user_id)
     posts = Post.query.filter_by(owner=user_id)
     return render_template('account_profile.html', user=user, posts=posts, profile=user_profile)
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
 @main.route('/account-profile/<user_id>/edit', methods = ['GET', 'POST'])
 def edit_profile(user_id):
@@ -107,7 +110,8 @@ def edit_profile(user_id):
       db.session.commit()
       return redirect(f'/account-profile/{user_id}')
     return render_template('edit_profile.html', user=user, form=form)
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
 
 
@@ -122,7 +126,8 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect('/google/logout')
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
 @main.route('/delete-post/<post_id>')
 def delete_post(post_id):
@@ -133,7 +138,8 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
     return redirect(f'/feed/{user.id}')
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
 @main.route('/delete-comment/<comment_id>')
 def delete_comment(comment_id):
@@ -144,5 +150,6 @@ def delete_comment(comment_id):
     db.session.delete(comment)
     db.session.commit()
     return redirect(f'/feed/{user.id}')
-  return flash('You are not currently logged in.')
+  flash('You are not currently logged in.')
+  return redirect('/')
 
